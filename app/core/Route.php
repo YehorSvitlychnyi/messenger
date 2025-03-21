@@ -49,14 +49,10 @@ class Route
             self::notFound();
         }
         $controller = new $controllerClassName();
-        if(!($controller instanceof controllable)){
-            throw new \InvalidArgumentException('Controller must be type of controllable');
-        }
         if(!method_exists($controller, $actionName)){
             self::notFound();
         }
-        $request = new Request();
-        $controller->$actionName($request);
+        $controller->$actionName();
     }
 
     /**
