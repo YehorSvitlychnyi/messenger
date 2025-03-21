@@ -36,4 +36,4 @@ spl_autoload_register(function($class){
 
 loadConfig();
 
-//\app\core\Route::init();
+\app\core\Route::init();
