@@ -4,5 +4,4 @@ namespace core;
 
 class Route
 {
-
 }
