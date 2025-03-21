@@ -80,5 +80,5 @@ class Route
     {
         return '/' . strtolower($controller) . '/' . strtolower($action);
     }
-    
+
 }
