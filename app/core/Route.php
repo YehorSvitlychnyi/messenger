@@ -9,12 +9,12 @@ class Route
     /**
      * default controller name
      */
-    const DEFAULT_CONTROLLER = 'index';
+    const DEFAULT_CONTROLLER = 'auth';
 
     /**
      * default action name
      */
-    const DEFAULT_ACTION = 'index';
+    const DEFAULT_ACTION = 'sighin';
 
     /**
      * Parse url path for the controller and action
@@ -49,9 +49,10 @@ class Route
             self::notFound();
         }
         $controller = new $controllerClassName();
-        if(!method_exists($controller, $actionName)){
+        if(!method_exists($controller, $actionName)) {
             self::notFound();
         }
+
         $controller->$actionName();
     }
 

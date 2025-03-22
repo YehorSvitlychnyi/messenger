@@ -1,8 +1,11 @@
 <?php
 
-namespace controllers;
+namespace app\controllers;
 
 class AuthController
 {
-
+    public function sighin()
+    {
+        echo('hello');
+    }
 }
