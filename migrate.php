@@ -13,7 +13,7 @@ class Migrate extends AbstractModel {
         $query = "CREATE TABLE users (
             id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
-            login VARCHAR(255) UNIQUE,
+            login VARCHAR(191) UNIQUE,
             password VARCHAR(255),
             secret_answer VARCHAR(255)
         );";
@@ -54,7 +54,6 @@ class Migrate extends AbstractModel {
 
         $this->createDataTest();
     }
-
     private function createDataTest() {
         $query = "INSERT INTO users (name, login, password, secret_answer) VALUES
             ('Перший', 'one', 'pass1', 'answer1'),
