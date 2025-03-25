@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class AuthController
 {
-    public function sighin()
+    public function signin()
     {
         echo('hello');
     }
