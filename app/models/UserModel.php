@@ -17,6 +17,10 @@ class UserModel extends AbstractModel
         }
         return $res->fetch_assoc();
     }
-
+    public function changePassword(string $login, string $password){
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "UPDATE {$this->table} SET " . "password = $password" . " WHERE login like  {$login};";
+        return $this->db->query($query);
+    }
 
 }

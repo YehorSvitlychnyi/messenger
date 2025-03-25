@@ -33,8 +33,9 @@ abstract class AbstractModel
         return $this->db->query($query);
     }
 
-    public function delete(int $id){
-        $query = "DELETE FROM {$this->table} WHERE id = {$id}";
-        return $this->db->query($query);
-    }
+//    public function delete(int $id){
+//        $query = "DELETE FROM {$this->table} WHERE id = {$id}";
+//        return $this->db->query($query);
+//    }
+
 }
