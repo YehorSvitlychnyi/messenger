@@ -8,4 +8,23 @@ class Response
     {
         http_response_code($statusCode);
     }
+    public function view(string $viewName, array $params = []): void
+    {
+        $viewFile = __DIR__ . '/../views/pages/' . $viewName . '_page.php';
+
+        if (!file_exists($viewFile)) {
+            http_response_code(500);
+            echo "View not found: $viewFile";
+            exit();
+        }
+
+        // Додаємо змінні у область видимості
+        extract($params);
+
+        $pagePath = $viewFile;
+        $title = ucfirst($viewName);
+
+        include __DIR__ . '/../views/templates/default_template.php';
+    }
+
 }

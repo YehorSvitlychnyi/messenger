@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #033540;
+}
+body, html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.reset-container {
+    width: 90%;
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: #E0F4F5;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.login-h1 {
+    margin-bottom: 30px;
+    color: #033540;
+    font-size: 32px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%;
+}
+form {
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #015366;
+    font-size: 18px;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #A7D1D2;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+input[type="password"]:focus {
+    border-color: #63898C;
+    outline: none;
+    box-shadow: 0 0 5px rgba(1, 83, 102, 0.4);
+}
+
+button {
+    margin-top: 20px;
+    background-color: #015366;
+    color: #fff;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #033540;
+}
+
+.login-links {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.login-links a {
+    color: #015366;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-links a:hover {
+    text-decoration: underline;
+}
+
+/* ✅ Адаптивність */
+@media (max-width: 480px) {
+    .reset-container {
+        padding: 25px;
+    }
+
+    .login-h1 {
+        font-size: 26px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    input[type="password"] {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 10px 20px;
+    }
+}
