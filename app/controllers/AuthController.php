@@ -59,29 +59,6 @@ class AuthController
         Session::setItem('login', $login);
         $this->response->redirect(Route::url('Api','getchats'));
     }
-    public function resetPassword(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $newPassword = $_POST['new_password'] ?? '';
-            $repeatPassword = $_POST['repeat_password'] ?? '';
-
-            if ($newPassword !== $repeatPassword) {
-                echo "Паролі не співпадають!";
-                return;
-            }
-
-            // Тут має бути логіка оновлення пароля в БД
-            // Наприклад (умовно):
-            // $userModel = new UserModel();
-            // $userModel->updatePassword($userId, password_hash($newPassword, PASSWORD_DEFAULT));
-
-            echo "Пароль успішно змінено!";
-        } else {
-            // Якщо GET-запит — показуємо сторінку з формою
-            $response = new Response();
-            $response->view('reset_password');
-        }
-    }
     public function forgot()
     {
         $this->response->view('forgot', [
