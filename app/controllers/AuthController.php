@@ -59,14 +59,6 @@ class AuthController
         Session::setItem('login', $login);
         $this->response->redirect(Route::url('Api','getchats'));
     }
-
-
-
-    public function sigin()
-    {
-        echo('hello');
-    }
-
     public function resetPassword(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -90,26 +82,32 @@ class AuthController
             $response->view('reset_password');
         }
     }
-
-    public function forgot(): void
+    public function forgot()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $login = $_POST['your_login'] ?? '';
-            $answer = $_POST['secret_answer'] ?? '';
-            if (empty($login) || empty($answer)) {
-                echo "Please fill in all fields.";
-                return;
-            }
-            if ($answer !== 'Anton') {
-                echo "Incorrect secret word.";
-                return;
-            }
-            echo "Login:" . $login . "<br>";
-            echo "Secret answer: " . $answer;
-        } else {
-            $response = new Response();
-            $response->view('forgot');
-        }
+        $this->response->view('forgot', [
+            'title' => 'forgot password',
+            'action' => Route::url('auth', 'forgotpassword'),
+            'errors' => Session::getErrors(),
+        ]);
     }
-
+    public function forgotpassword(){
+        $request = new Request();
+        $login = $request->login;
+        $answer = $request->answer;
+        //TODO validate
+        $user = $this->model->getByLogin($login);
+        $userValidation = true;
+        if (!$user) {
+            $userValidation = false;
+        }else if (!password_verify($answer, $user['secret_answer'])) {
+            $userValidation = false;
+        }
+        if (!$userValidation) {
+            Session::setErrors(['forgot_password_error']);
+            //todo errors from validate
+            $this->response->redirect(Route::url('auth', 'forgot'));
+        }
+        Session::setItem('login_change', $login);
+        $this->response->redirect(Route::url('auth','reset'));
+    }
 }
