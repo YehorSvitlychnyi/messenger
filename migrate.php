@@ -54,7 +54,6 @@ class Migrate extends AbstractModel {
 
         $this->createDataTest();
     }
-
     private function createDataTest() {
         $query = "INSERT INTO users (name, login, password, secret_answer) VALUES
             ('Перший', 'one', 'pass1', 'answer1'),

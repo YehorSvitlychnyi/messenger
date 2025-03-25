@@ -14,7 +14,7 @@ class Route
     /**
      * default action name
      */
-    const DEFAULT_ACTION = 'sigin';
+    const DEFAULT_ACTION = 'signin';
 
     /**
      * Parse url path for the controller and action
@@ -49,7 +49,7 @@ class Route
             self::notFound();
         }
         $controller = new $controllerClassName();
-        if(!method_exists($controller, $actionName)) {
+        if(!method_exists($controller, $actionName)){
             self::notFound();
         }
 
@@ -77,4 +77,5 @@ class Route
     {
         return '/' . strtolower($controller) . '/' . strtolower($action);
     }
+
 }
