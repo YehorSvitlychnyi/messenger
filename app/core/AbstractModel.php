@@ -12,7 +12,7 @@ abstract class AbstractModel
     {
         $this->db = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     }
-/*
+
     public function all(){
         $query = "SELECT * FROM {$this->table}";
         $res = $this->db->query($query);
@@ -36,5 +36,5 @@ abstract class AbstractModel
     public function delete(int $id){
         $query = "DELETE FROM {$this->table} WHERE id = {$id}";
         return $this->db->query($query);
-    }*/
+    }
 }

@@ -56,7 +56,7 @@
 
 .login-register-button,
 .login-forgot-button {
-    margin-top: 10px;
+    margin: 10px;
 }
 
 .login-register-button a,
@@ -65,11 +65,12 @@
     text-decoration: none;
     font-size: 14px;
 }
+.login-buttons{
+    display: flex;
+    flex-direction: row;
+}
 
 .login-register-button a:hover,
 .login-forgot-button a:hover {
     text-decoration: underline;
 }
-
-
-

@@ -1,8 +1,12 @@
 <?php
 
-namespace controllers;
+namespace app\controllers;
+
 
 class ApiController
 {
-
+    public function getchats()
+    {
+        echo 'hello';
+    }
 }

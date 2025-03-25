@@ -4,10 +4,13 @@
 namespace app\controllers;
 
 
+use app\core\Request;
 use app\core\Response;
 use app\core\AbstractModel;
 use app\core\Route;
 use app\core\Session;
+use app\models\UserModel;
+
 
 class AuthController
 {
@@ -24,35 +27,38 @@ class AuthController
     public function __construct()
     {
         $this->response = new Response();
+        $this->model = new UserModel();
     }
     public function signin()
     {
         $this->response->view('auth', [
-            'content' => 'Hi',
+            'title' => 'signIn',
             'action' => Route::url('auth', 'login'),
-//            'errors' => Session::getErrors(),
+            'errors' => Session::getErrors(),
         ]);
     }
 
-//    public function login($request)
-//    {
-//        $login = $request->login;
-//        $password = $request->password;
-//        //TODO validate
-//        $user = $this->model->getByLogin($login);
-//        $validUserCred = true;
-//        if (!$user) {
-//            $validUserCred = false;
-//        }else if (!password_verify($password, $user['password'])) {
-//            $validUserCred = false;
-//        }
-//        if (!$validUserCred) {
-//            Session::setErrors([Translate::getText('auth_error')]);
-//            $this->response->redirect(Route::url('auth'));
-//        }
-//        Auth::setUser(['login' => $login]);
-//        $this->response->redirect(Route::url('task'));
-//    }
+    public function login()
+    {
+        $request = new Request();
+        $login = $request->login;
+        $password = $request->password;
+        //todo validate
+        $user = $this->model->getByLogin($login);
+        $userValidation = true;
+        if (!$user) {
+            $userValidation = false;
+        }else if (!password_verify($password, $user['password'])) {
+            $userValidation = false;
+        }
+        if (!$userValidation) {
+            Session::setErrors(['auth_error']);
+            //todo errors from validate
+            $this->response->redirect(Route::url('auth', 'signin'));
+        }
+        Session::setItem('login', $login);
+        $this->response->redirect(Route::url('Api','getchats'));
+    }
 
 
 
