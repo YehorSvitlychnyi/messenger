@@ -14,7 +14,7 @@ class Route
     /**
      * default action name
      */
-    const DEFAULT_ACTION = 'sighin';
+    const DEFAULT_ACTION = 'signin';
 
     /**
      * Parse url path for the controller and action

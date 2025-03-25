@@ -1,0 +1,75 @@
+.login-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.login-form-container {
+    background-color: #A7D1D2;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+.login-h1 {
+    color: #033540;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #015366;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #63898C;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.login-form input[type="submit"] {
+    background-color: #015366;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #033540;
+}
+
+.login-register-button,
+.login-forgot-button {
+    margin-top: 10px;
+}
+
+.login-register-button a,
+.login-forgot-button a {
+    color: #033540;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-register-button a:hover,
+.login-forgot-button a:hover {
+    text-decoration: underline;
+}
+
+
+
