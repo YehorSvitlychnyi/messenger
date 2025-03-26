@@ -110,7 +110,7 @@ class AuthController
             $this->response->redirect(Route::url('auth', 'signin'));
         }
         $this->model->changePassword($login,$password);
-        Session::deleteIten('login_change');
+        Session::deleteItem('login_change');
         $this->response->redirect(Route::url('auth', 'signin'));
     }
     public function signup(){

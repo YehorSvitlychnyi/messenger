@@ -33,7 +33,7 @@ class Session
         unset($_SESSION['errors']);
         return $errors;
     }
-    static public function deleteIten($key)
+    static public function deleteItem($key)
     {
         session_start();
         unset($_SESSION[$key]);
