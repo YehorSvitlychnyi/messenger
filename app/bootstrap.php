@@ -4,19 +4,20 @@
  * Parse config file and creates specify constants
  * @throws Exception
  */
-function loadConfig(){
+function loadConfig()
+{
     $configFile = '../config';
-    if(!file_exists($configFile)){
+    if (!file_exists($configFile)) {
         throw new Exception('no config file');
     }
     $configStr = file_get_contents($configFile);
     $configPairs = explode(PHP_EOL, $configStr);
-    foreach ($configPairs as $configPair){
-        if(empty($configPair)){
+    foreach ($configPairs as $configPair) {
+        if (empty($configPair)) {
             continue;
         }
         $confComponents = explode('=', $configPair);
-        if(count($confComponents) != 2){
+        if (count($confComponents) != 2) {
             throw new Exception('Incorrect config pair ' . $configPair);
         }
         $configKey = trim($confComponents[0]);
@@ -25,9 +26,9 @@ function loadConfig(){
     }
 }
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     $classFile = '..' . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    if(file_exists($classFile)){
+    if (file_exists($classFile)) {
         include_once $classFile;
         return true;
     }
@@ -36,4 +37,4 @@ spl_autoload_register(function($class){
 
 loadConfig();
 
-//\app\core\Route::init();
+\app\core\Route::init();
