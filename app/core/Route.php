@@ -14,7 +14,7 @@ class Route
     /**
      * default action name
      */
-    const DEFAULT_ACTION = 'sighin';
+    const DEFAULT_ACTION = 'signin';
 
     /**
      * Parse url path for the controller and action
@@ -23,7 +23,7 @@ class Route
     {
         $controllerName = self::DEFAULT_CONTROLLER;
         $actionName = self::DEFAULT_ACTION;
-        $urlPath = $_SERVER['REQUEST_URI'];
+        $urlPath = $_SERVER['REQUEST_URI'] ?? '/';  //  для бд
         if(strpos($urlPath,'?')){
             $urlSearchComponents = explode('?', $urlPath);
             $urlPath = $urlSearchComponents[0];
@@ -49,7 +49,7 @@ class Route
             self::notFound();
         }
         $controller = new $controllerClassName();
-        if(!method_exists($controller, $actionName)) {
+        if(!method_exists($controller, $actionName)){
             self::notFound();
         }
 
