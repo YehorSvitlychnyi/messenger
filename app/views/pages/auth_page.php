@@ -1,5 +1,5 @@
 <div class="login-body">
-    <h1 class="login-h1">Welcome to messenger</h1>
+    <h1 class="h1">Welcome to messenger</h1>
     <div class="errors-list">
         <?php include_once  '../app/views/errors.php'?>
     </div>

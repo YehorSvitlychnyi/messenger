@@ -15,7 +15,7 @@
     width: 300px;
 }
 
-.login-h1 {
+.h1{
     color: #033540;
     font-size: 20px;
     margin-bottom: 20px;
@@ -73,4 +73,20 @@
 .login-register-button a:hover,
 .login-forgot-button a:hover {
     text-decoration: underline;
+}
+
+
+
+.register-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.input{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
