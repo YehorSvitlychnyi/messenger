@@ -57,7 +57,7 @@ class AuthController
             $this->response->redirect(Route::url('auth', 'signin'));
         }
         Session::setItem('login', $login);
-        $this->response->redirect(Route::url('Api', 'getchats'));
+        $this->response->redirect(Route::url('chat', 'init'));
     }
 
     public function forgot()

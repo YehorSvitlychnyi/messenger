@@ -74,9 +74,6 @@
 .login-forgot-button a:hover {
     text-decoration: underline;
 }
-
-
-
 .register-body{
     display: flex;
     flex-direction: column;
@@ -89,4 +86,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.chat-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    >div{
+        min-width: 200px;
+        min-height: 200px;
+        background-color: #63898C;
+    }
 }
