@@ -7,7 +7,7 @@ namespace app\core;
 class Session
 {
     static function getItem($key){
-        session_start();
+        (new Session)->isSessionStart();
         if(empty($_SESSION[$key])){
             return null;
         }
@@ -15,17 +15,17 @@ class Session
     }
 
     static public function setItem($key, $val){
-        session_start();
+        (new Session)->isSessionStart();
         $_SESSION[$key] = $val;
     }
 
     static public function setErrors(array $errors){
-        session_start();
+        (new Session)->isSessionStart();
         $_SESSION['errors'] = $errors;
     }
 
     static public function getErrors(){
-        session_start();
+        (new Session)->isSessionStart();
         if(empty($_SESSION['errors'])){
             return [];
         }
@@ -35,8 +35,17 @@ class Session
     }
     static public function deleteItem($key)
     {
-        session_start();
+        (new Session)->isSessionStart();
         unset($_SESSION[$key]);
     }
 
+    /**
+     * @return void
+     */
+    private function isSessionStart(): void
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+    }
 }

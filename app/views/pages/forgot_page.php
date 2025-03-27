@@ -4,7 +4,7 @@
 </div>
 <form method="post" action="<?= $action ?>">
     <label for="login">Your login:</label>
-    <input type="text" name="login" id="login" placeholder="Your login" autofocus>
+    <input type="text" name="login" id="login" placeholder="Your login" value="<?= \app\core\Validation::getOld()['login'] ?? '' ?>" autofocus>
 
     <label for="answer">Secret answer:</label>
     <input type="text" name="answer" id="answer" placeholder="Secret answer">

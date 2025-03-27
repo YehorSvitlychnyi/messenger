@@ -4,9 +4,9 @@
         <?php include_once  '../app/views/errors.php'?>
     </div>
 
-    <form action="<?= $action ?>" method="post" class="login-form">
+    <form action="<?= $action ?>" method="post" class="login-form" autocomplete="off">
         <label for="login">login</label>
-        <input type="text" name="login" id="login"/>
+        <input type="text" name="login" id="login" value="<?= \app\core\Validation::getOld()['login'] ?? '' ?>"/>
         <label for="pass">password</label>
         <input type="password" name="password" id="pass"/>
         <input type="submit" value="Go"/>

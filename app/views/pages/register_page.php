@@ -6,11 +6,11 @@
     <form action="<?= $action ?>" method="post" class="register-form">
         <div class="input">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name"/>
+            <input type="text" name="name" id="name" value="<?= \app\core\Validation::getOld()['name'] ?? '' ?>"/>
         </div>
         <div class="input">
             <label for="login">Login</label>
-            <input type="text" name="login" id="login"/>
+            <input type="text" name="login" id="login" value="<?= \app\core\Validation::getOld()['login'] ?? '' ?>"/>
         </div>
         <div class="input">
             <label for="password">Password</label>
