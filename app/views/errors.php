@@ -1,4 +1,4 @@
-<?php if (!empty($errors)): ?>
+<?php if (!empty($errors)):?>
     <ul class="errors">
         <?php foreach ($errors as $fieldErrors): ?>
             <?php foreach ($fieldErrors as $error): ?>

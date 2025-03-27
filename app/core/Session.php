@@ -49,3 +49,15 @@ class Session
         }
     }
 }
+
+//static private function isSessionStart(): void
+//{
+//    if (session_status() !== PHP_SESSION_ACTIVE) {
+//        session_start();
+//    }
+//}
+
+//static public function setItem($key, $val){
+//    self::isSessionStart();
+//    $_SESSION[$key] = $val;
+//}

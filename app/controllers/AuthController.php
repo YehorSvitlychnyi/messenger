@@ -72,12 +72,12 @@ class AuthController
     {
         $this->validate('forgot', 'forgot');
         $login = $this->request->login;
-        $answer = $this->request->answer;
+        $secret_answer = $this->request->secret_answer;
         $user = $this->model->getByLogin($login);
         $userValidation = true;
         if (!$user) {
             $userValidation = false;
-        } else if (!password_verify($answer, $user['secret_answer'])) {
+        } else if (!password_verify($secret_answer, $user['secret_answer'])) {
             $userValidation = false;
         }
         if (!$userValidation) {

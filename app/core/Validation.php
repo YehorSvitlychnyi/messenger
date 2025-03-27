@@ -18,7 +18,7 @@ class Validation
         ],
         'forgot'   => [
             'login'  => 'required|min:5|max:20',
-            'answer' => 'required|min:2|max:100',
+            'secret_answer' => 'required|min:2|max:100',
         ],
         'reset'    => [
             'password'        => 'required|min:6|max:30',

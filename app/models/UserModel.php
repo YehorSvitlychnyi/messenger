@@ -3,6 +3,7 @@
 
 namespace app\models;
 
+
 use app\core\AbstractModel;
 
 class UserModel extends AbstractModel
