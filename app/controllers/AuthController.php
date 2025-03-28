@@ -10,6 +10,7 @@ use app\core\AbstractModel;
 use app\core\Route;
 use app\core\Session;
 use app\models\UserModel;
+use app\core\Validation;
 
 
 class AuthController
@@ -18,6 +19,9 @@ class AuthController
      * @var Response
      */
     protected Response $response;
+
+    protected Request $request;
+    protected Validation $validation;
 
     /**
      * @var AbstractModel
@@ -28,23 +32,21 @@ class AuthController
     {
         $this->response = new Response();
         $this->model = new UserModel();
+        $this->request = new Request();
+        $this->validation = new Validation();
     }
 
 
     public function signin(): void
     {
-        $this->response->view('auth', [
-            'title' => 'signIn',
-            'action' => Route::url('auth', 'login'),
-            'errors' => Session::getErrors(),
-        ]);
+        $this->authView('auth','login','signIn');
     }
 
-    public function login()
+    public function login(): void
     {
-        $request = new Request();
-        $login = $request->login;
-        $password = $request->password;
+        $this->validate('login', 'signin');
+        $login = $this->request->login;
+        $password = $this->request->password;
         //todo validate
         $user = $this->model->getByLogin($login);
         $userValidation = true;
@@ -55,38 +57,31 @@ class AuthController
         }
         if (!$userValidation) {
             Session::setErrors(['auth_error']);
-            //todo errors from validate
             $this->response->redirect(Route::url('auth', 'signin'));
         }
         Session::setItem('login', $login);
-        $this->response->redirect(Route::url('Api', 'getchats'));
+        $this->response->redirect(Route::url('chat', 'init'));
     }
 
     public function forgot()
     {
-        $this->response->view('forgot', [
-            'title' => 'forgot password',
-            'action' => Route::url('auth', 'forgotpassword'),
-            'errors' => Session::getErrors(),
-        ]);
+        $this->authView('forgot','forgotpassword','forgot password');
     }
 
     public function forgotpassword()
     {
-        $request = new Request();
-        $login = $request->login;
-        $answer = $request->answer;
-        //TODO validate
+        $this->validate('forgot', 'forgot');
+        $login = $this->request->login;
+        $secret_answer = $this->request->secret_answer;
         $user = $this->model->getByLogin($login);
         $userValidation = true;
         if (!$user) {
             $userValidation = false;
-        } else if (!password_verify($answer, $user['secret_answer'])) {
+        } else if (!password_verify($secret_answer, $user['secret_answer'])) {
             $userValidation = false;
         }
         if (!$userValidation) {
             Session::setErrors(['forgot_password_error']);
-            //todo errors from validate
             $this->response->redirect(Route::url('auth', 'forgot'));
         }
         Session::setItem('login_change', $login);
@@ -95,11 +90,7 @@ class AuthController
 
     public function reset()
     {
-        $this->response->view('auth', [
-            'title' => 'reset password',
-            'action' => Route::url('auth', 'resetpassword'),
-            'errors' => Session::getErrors(),
-        ]);
+        $this->authView('reset_password','resetpassword','reset password');
     }
 
     public function resetpassword()
@@ -108,10 +99,9 @@ class AuthController
         if ($login === null) {
             $this->response->redirect(Route::url('auth', 'signin'));
         }
-        $request = new Request();
-        $password = $request->password;
-        $repeat_password = $request->repeat_password;
-        //TODO validate and repeat_password
+        $this->validate('reset', 'reset');
+        $password = $this->request->password;
+        $repeat_password = $this->request->repeat_password;
         $user = $this->model->getByLogin($login);
         $userValidation = true;
         if (!$user) {
@@ -121,29 +111,54 @@ class AuthController
             Session::setErrors(['No_login_error']);
             $this->response->redirect(Route::url('auth', 'signin'));
         }
+        $this->model->changePassword($login,$password);
+        Session::deleteItem('login_change');
+        $this->response->redirect(Route::url('auth', 'signin'));
+    }
+    public function signup(){
+        $this->authView('register','register','register');
+    }
+    public function register()
+    {
+        if ($this->model->getByLogin($this->request->login)) {
+            Session::setErrors(['login' => ['Цей логін вже зайнятий']]);
+            $this->response->redirect(Route::url('auth', 'signup'));
+        }
+        $this->validate('register', 'signup');
+        $name = $this->request->name;
+        $login = $this->request->login;
+        $password = $this->request->password;
+        $repeat_password = $this->request->repeat_password;
+        $secret_answer = $this->request->secret_answer;
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $secret_answer = password_hash($secret_answer, PASSWORD_DEFAULT);
+        $this->model->add([
+            'name' => $name,
+            'login' => $login,
+            'password' => $password,
+            'secret_answer' => $secret_answer,
+        ]);
+        $this->response->redirect(Route::url('auth', 'signin'));
+    }
+    private function authView(string $page, string $action, string $title = 'messenger'){
+        $this->response->view($page, [
+            'title' => $title,
+            'action' => Route::url('auth', $action),
+            'errors' => Session::getErrors(),
+        ]);
     }
 
-
-
-
-
-
-//        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//            $newPassword = $_POST['new_password'] ?? '';
-//            $repeatPassword = $_POST['repeat_password'] ?? '';
-//
-//            if ($newPassword !== $repeatPassword) {
-//                echo "Паролі не співпадають!";
-//                return;
-//            }
-//
-//            // Логіка зміни пароля (наприклад, через UserModel)
-//
-//            header("Location: " . \app\core\Route::url('auth', 'signin'));
-//            exit();
-//        } else {
-//            $response = new \app\core\Response();
-//            $response->view('reset_password');
-//        }
-//    }
+    /**
+     * @param $method
+     * @param $action
+     *
+     * @return void
+     */
+    private function validate($method, $action): void
+    {
+        if (!$this->validation->validate($method, $_POST)) {
+            Session::setErrors($this->validation->getErrors());
+            $this->response->redirect(Route::url('auth', $action));
+        }
+    }
 }
