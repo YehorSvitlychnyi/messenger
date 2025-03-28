@@ -1,4 +1,4 @@
-const newChat = document.getElementsByClassName('new-chat');
+const newChat = document.querySelector('.new-chat');
 const chatCatalog = document.querySelector('.chat-catalog');
 const chatName = document.getElementsByClassName('chat-name');
 const chatMessages = document.getElementsByClassName('chat-messages');
@@ -6,8 +6,10 @@ const chatNewMessage = document.getElementsByClassName('chat-new-message');
 const chatUser = document.getElementsByClassName('chat-user');
 init();
 function init(){
+    chatSelect();
     getAllChats();
 }
+
 function getAllChats(){
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function (){
@@ -43,3 +45,43 @@ function getMessages(id){
     xhr.open('POST', '/Api/getMessages');
     xhr.send(data);
 }
+
+function chatSelect(){
+    let xhr = new  XMLHttpRequest();
+    xhr.onreadystatechange = function (){
+        if (xhr.readyState === 4){
+            let usersList = JSON.parse(xhr.response);
+            let body = `<form><select name="select"><option hidden>new chat</option>`;
+            for(let user of usersList){
+                body += `<option value="${user.id}">${user.login} - ${user.name}</option>`
+            }
+            body += `</select><input type="submit" value="add" class="add-chat-button"/></form>`;
+            newChat.innerHTML = body;
+            let form = document.querySelector('.new-chat form');
+            form.addEventListener('submit' ,function(e){
+                e.preventDefault();
+                if (this.elements.select.value !== 'new chat'){
+                    addChat(this.elements.select.value);
+                }
+            });
+        }
+    }
+    xhr.open('GET', '/Api/getUsers');
+    xhr.send();
+}
+function addChat(userId){
+    let xhr = new  XMLHttpRequest();
+    xhr.onreadystatechange = function (){
+
+    }
+    xhr.open('GET', '/Api/addChat');
+    xhr.send();
+}
+
+function action(){
+    alert('ok');
+}
+let myRequest = (func)=>{
+    func();
+}
+myRequest(action);

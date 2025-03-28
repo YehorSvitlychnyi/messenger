@@ -15,24 +15,15 @@ class ChatModel extends AbstractModel
         parent::__construct();
         $this->messageModel = new MessagesModel();
     }
-
-    private function getId()
+    public function getChats(string $userId)
     {
-        $user = new UserModel();
-        $userData = $user->getByLogin(Session::getItem('login'));
-        $userId = $userData['id'];
-        return $userId;
-    }
-    public function getChats()
-    {
-        $id = $this->getId();
-        $sql = "SELECT * FROM {$this->table} WHERE user_first_id = {$id} OR user_second_id = {$id};";
+        $sql = "SELECT * FROM {$this->table} WHERE user_first_id = {$userId} OR user_second_id = {$userId};";
         $res = $this->db->query($sql);
         return $res->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getMessages(string $id)
+    public function getMessages(string $chatId)
     {
-        return $this->messageModel->getMessages($id);
+        return $this->messageModel->getMessages($chatId);
     }
 }

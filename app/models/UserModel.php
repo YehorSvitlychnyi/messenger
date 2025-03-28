@@ -5,6 +5,7 @@ namespace app\models;
 
 
 use app\core\AbstractModel;
+use app\core\Session;
 
 class UserModel extends AbstractModel
 {
@@ -23,4 +24,11 @@ class UserModel extends AbstractModel
         $query = "UPDATE {$this->table} SET {$this->table}.password = '{$password}' WHERE {$this->table}.login LIKE '{$login}';";
         return $this->db->query($query);
     }
+    public function getId()
+    {
+        $userData = $this->getByLogin(Session::getItem('login'));
+        $userId = $userData['id'];
+        return $userId;
+    }
+
 }
