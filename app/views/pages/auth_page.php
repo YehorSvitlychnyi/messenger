@@ -1,25 +1,24 @@
-<div class="login-body">
-    <h1 class="h1">Welcome to messenger</h1>
-    <div class="errors-list">
-        <?php include_once  '../app/views/errors.php'?>
-    </div>
-
-    <form action="<?= $action ?>" method="post" class="login-form" autocomplete="off">
-        <label for="login">login</label>
-        <input type="text" name="login" id="login" value="<?= \app\core\Validation::getOld()['login'] ?? '' ?>"/>
-        <label for="pass">password</label>
-        <input type="password" name="password" id="pass"/>
-        <input type="submit" value="Go"/>
-    </form>
-
-    <div class="login-buttons">
-        <div class="login-register-button">
-            <a href="<?= \app\core\Route::url('auth','signup')?>">Register</a>
+<div class="d-flex justify-content-center auth-container">
+    <div class="bg-secondary text-light p-4 min-max-w auth-card">
+        <h1 class="text-center mb-4">Welcome to messenger</h1>
+        <div class="mb-3 text-warning">
+            <?php include_once '../app/views/errors.php' ?>
         </div>
-
-        <div class="login-forgot-button">
-            <a href="<?= \app\core\Route::url('auth','forgot')?>">Forgot password</a>
+        <form action="<?= $action ?>" method="post" novalidate>
+            <div class="mb-3">
+                <label for="login" class="form-label">Login</label>
+                <input type="text" class="form-control bg-dark text-light border-0" name="login" id="login"
+                       value="<?= \app\core\Validation::getOld()['login'] ?? '' ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="pass" class="form-label">Password</label>
+                <input type="password" class="form-control bg-dark text-light border-0" name="password" id="pass" required>
+            </div>
+            <button type="submit" class="btn btn-outline-light w-100">Go</button>
+        </form>
+        <div class="mt-3 d-flex justify-content-between">
+            <a href="<?= \app\core\Route::url('auth','signup') ?>" class="link-light">Register</a>
+            <a href="<?= \app\core\Route::url('auth','forgot') ?>" class="link-light">Forgot password</a>
         </div>
     </div>
-
 </div>
