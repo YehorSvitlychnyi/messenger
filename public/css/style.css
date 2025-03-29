@@ -1,3 +1,4 @@
+/*
 .login-body {
     display: flex;
     flex-direction: column;
@@ -96,4 +97,15 @@
         min-height: 200px;
         background-color: #63898C;
     }
+}
+*/
+
+.auth-container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.auth-card {
+    max-width: 600px;
+    border-radius: 12px;
 }
