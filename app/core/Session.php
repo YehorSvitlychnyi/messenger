@@ -56,7 +56,7 @@ class Session
 //        session_start();
 //    }
 //}
-
+//
 //static public function setItem($key, $val){
 //    self::isSessionStart();
 //    $_SESSION[$key] = $val;
