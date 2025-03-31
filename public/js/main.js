@@ -18,6 +18,7 @@ function init(){
     setTimeout(function(){
         chatSelect();
         getAllChats();
+        logout();
     },10);
 }
 function getAllChats(){
@@ -144,6 +145,22 @@ function newMessage(chatId){
         }
         xhr.open('POST', '/Api/addMessage');
         xhr.send(data);
+    });
+}
+function logout(){
+    let body = `<div class="user-logout"><p>${window.user.name}</p></div><form><input type="submit" value="log Out"></form>`;
+    chatUser.innerHTML = body;
+    let logout = document.querySelector('.chat-user form');
+    logout.addEventListener('submit' ,function(e){
+        e.preventDefault();
+        window.user = null;
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/Api/logout');
+        xhr.send();
+        setTimeout(function(){
+            window.location.replace("/auth/signin");
+        }, 20);
+
     });
 }
 

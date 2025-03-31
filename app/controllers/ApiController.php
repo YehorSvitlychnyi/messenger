@@ -7,6 +7,7 @@ namespace app\controllers;
 use app\core\Request;
 use app\core\Response;
 use app\core\Route;
+use app\core\Session;
 use app\models\ChatModel;
 use app\models\MessagesModel;
 use app\models\UserModel;
@@ -89,5 +90,8 @@ class ApiController
         }else{
             $this->response->json(['data'=>'message not created']);
         }
+    }
+    public function logout(){
+        Session::deleteItem('login');
     }
 }
