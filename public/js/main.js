@@ -8,7 +8,6 @@ window.user = null;
 setInterval(function () {
     chatSelect();
     getAllChats();
-    console.log(sessionStorage.getItem('chatName'));
     if(sessionStorage.getItem('chatName') !== null) {
         getMessages(sessionStorage.getItem('chatId'),sessionStorage.getItem('chatName'));
     }
@@ -21,7 +20,6 @@ function init(){
         getAllChats();
     },10);
 }
-
 function getAllChats(){
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function (){
