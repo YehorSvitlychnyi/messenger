@@ -109,6 +109,7 @@
     border-radius: 12px;
 }
 .chat-messages{
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -122,6 +123,7 @@
     }
 }
 .message{
+    word-wrap: break-word;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -135,4 +137,7 @@
         margin: 0;
         padding: 0;
     }
+}
+.chat-new-message{
+    width: 400px;
 }

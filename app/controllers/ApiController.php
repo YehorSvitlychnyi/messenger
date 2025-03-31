@@ -8,6 +8,7 @@ use app\core\Request;
 use app\core\Response;
 use app\core\Route;
 use app\models\ChatModel;
+use app\models\MessagesModel;
 use app\models\UserModel;
 
 class ApiController
@@ -15,8 +16,12 @@ class ApiController
     public $response;
     public $model;
     public $userModel;
+
+    public $messageModel;
     public $request;
     public $acceptedUsers;
+
+    public $user;
 
     public function __construct()
     {
@@ -24,12 +29,13 @@ class ApiController
         $this->model = new ChatModel();
         $this->request = new Request();
         $this->userModel = new UserModel();
+        $this->messageModel = new MessagesModel();
+        $this->user = $this->userModel->getUser();
     }
 
     public function getChats()
     {
-        $user = $this->userModel->getUser();
-        $userId = $user['id'];
+        $userId = $this->user['id'];
         $chats = $this->model->getChats($userId);
         $this->response->json($chats);
     }
@@ -42,8 +48,7 @@ class ApiController
     public function getUsers()
     {
         $data = $this->userModel->all();
-        $user = $this->userModel->getUser();
-        $userId = $user['id'];
+        $userId = $this->user['id'];
         $chats = $this->model->getChats($userId);
         foreach($data as $key => $user){
             if($user['id'] == $userId){
@@ -73,5 +78,16 @@ class ApiController
         $user['login'] = $userData['login'];
         $user['id'] = $userData['id'];
         $this->response->json($user);
+    }
+    public function addMessage(){
+        $chatId = $this->request->chatId;
+        $message = $this->request->message;
+        $userId = $this->user['id'];
+        $data = ['message' => $message, 'chat_id' => $chatId, 'user_id' => $userId];
+        if($this->messageModel->add($data)){
+            $this->response->json(['data'=>date('Y-m-d H:i:s')]);
+        }else{
+            $this->response->json(['data'=>'message not created']);
+        }
     }
 }
