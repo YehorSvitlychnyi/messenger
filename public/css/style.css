@@ -87,7 +87,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+}*/
 .chat-body{
     display: flex;
     flex-direction: row;
@@ -98,7 +98,6 @@
         background-color: #63898C;
     }
 }
-*/
 
 .auth-container {
     padding-top: 60px;
@@ -108,4 +107,32 @@
 .auth-card {
     max-width: 600px;
     border-radius: 12px;
+}
+.chat-messages{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 400px;
+    width: 400px;
+    .right{
+        align-self: flex-end;
+    }
+    .left{
+        align-self: flex-start;
+    }
+}
+.message{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    background-color: #E0F4F5;
+    color: #eb000a;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 100px;
+    p{
+        margin: 0;
+        padding: 0;
+    }
 }
