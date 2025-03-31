@@ -4,13 +4,14 @@ const chatName = document.querySelector('.chat-name');
 const chatMessages = document.querySelector('.chat-messages');
 const chatNewMessage = document.querySelector('.chat-new-message');
 const chatUser = document.querySelector('.chat-user');
+window.user = null;
 init();
 function init(){
-    let user;
     getUser();
-    chatSelect();
-    getAllChats();
-    console.log(user);
+    setTimeout(function(){
+        chatSelect();
+        getAllChats();
+    },10);
 }
 
 function getAllChats(){
@@ -105,7 +106,7 @@ function getUser(){
     let xhr = new  XMLHttpRequest();
     xhr.onreadystatechange = function (){
         if (xhr.readyState === 4){
-            user = JSON.parse(xhr.response);
+            window.user = JSON.parse(xhr.response);
         }
     }
     xhr.open('GET', '/Api/getUser');
