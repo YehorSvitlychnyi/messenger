@@ -11,7 +11,7 @@
         <div class="chat-name">
 
         </div>
-        <div class="chat-messages" style="overflow: ">
+        <div class="chat-messages">
 
         </div>
         <div class="chat-new-message">
