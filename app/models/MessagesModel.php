@@ -10,9 +10,9 @@ class MessagesModel extends AbstractModel
 {
     protected $table = 'messages';
 
-    public function getMessages($id)
+    public function getMessages($chatId)
     {
-        $sql = "SELECT * FROM $this->table WHERE chat_id = $id;";
+        $sql = "SELECT messages.message as message, messages.created_at as created_at, users.name, users.login from messages LEFT OUTER JOIN users on messages.user_id = users.id WHERE messages.chat_id = $chatId;";
         $res = $this->db->query($sql);
         return $res->fetch_all(MYSQLI_ASSOC);
     }

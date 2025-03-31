@@ -26,4 +26,9 @@ class ChatModel extends AbstractModel
     {
         return $this->messageModel->getMessages($chatId);
     }
+    public  function  addChat($userIdFirst, $userIdSecond)
+    {
+        $sql = "INSERT INTO {$this->table} (name, user_first_id, user_second_id) VALUES (CONCAT((SELECT name from users WHERE users.id = $userIdFirst)" . ",' & '," . "(SELECT name from users WHERE users.id = $userIdSecond)), $userIdFirst, $userIdSecond);";
+        $res = $this->db->query($sql);
+    }
 }

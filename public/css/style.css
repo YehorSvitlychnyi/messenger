@@ -97,3 +97,25 @@
         background-color: #63898C;
     }
 }
+.chat-messages{
+    display: flex;
+    overflow-y: auto;
+    max-height: 400px;
+    width: 400px;
+    .right{
+        margin-right: 0px;
+    }
+}
+.message{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    background-color: #E0F4F5;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 100px;
+    p{
+        margin: 0;
+        padding: 0;
+    }
+}

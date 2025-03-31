@@ -24,11 +24,9 @@ class UserModel extends AbstractModel
         $query = "UPDATE {$this->table} SET {$this->table}.password = '{$password}' WHERE {$this->table}.login LIKE '{$login}';";
         return $this->db->query($query);
     }
-    public function getId()
-    {
+    public function getUser(){
         $userData = $this->getByLogin(Session::getItem('login'));
-        $userId = $userData['id'];
-        return $userId;
+        return $userData;
     }
 
 }
