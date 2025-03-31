@@ -5,6 +5,14 @@ const chatMessages = document.querySelector('.chat-messages');
 const chatNewMessage = document.querySelector('.chat-new-message');
 const chatUser = document.querySelector('.chat-user');
 window.user = null;
+setInterval(function () {
+    chatSelect();
+    getAllChats();
+    console.log(sessionStorage.getItem('chatName'));
+    if(sessionStorage.getItem('chatName') !== null) {
+        getMessages(sessionStorage.getItem('chatId'),sessionStorage.getItem('chatName'));
+    }
+}, 10000)
 init();
 function init(){
     getUser();
@@ -43,8 +51,12 @@ function getMessages(id, name){
     data.append('id', id)
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4){
+            console.log(xhr.response);
             let chatData = JSON.parse(xhr.response);
+            sessionStorage.setItem('chatName', name);
+            sessionStorage.setItem('chatId', id);
             showChat(chatData, name);
+            newMessage(id);
         }
     }
     xhr.open('POST', '/Api/getMessages');
@@ -55,8 +67,6 @@ function showChat(chatData, name){
     chatName.innerHTML = body;
     body = '';
     for(let message of chatData){
-        console.log(message);
-        console.log(user);
         if(message.login === user.login){
             body += `<div class="message right"><p>${message.name}</p><p>${message.message}</p><p>${message.created_at}</p></div>`;
         } else {
@@ -82,6 +92,7 @@ function chatSelect(){
                 e.preventDefault();
                 if (this.elements.select.selectedIndex !== 0){
                     addChat(this.elements.select.value);
+                    form.reset();
                 }
             });
         }
@@ -111,6 +122,31 @@ function getUser(){
     }
     xhr.open('GET', '/Api/getUser');
     xhr.send();
+}
+function newMessage(chatId){
+    let body = '<form><textarea cols="40" rows="2" style="min-height: 40px;max-height: 40px"></textarea><input type="submit" value="send"></form>';
+    chatNewMessage.innerHTML = body;
+    let form = document.querySelector('.chat-new-message form');
+    form.addEventListener('submit' ,function(e){
+        let me = this;
+        e.preventDefault();
+        let xhr = new XMLHttpRequest();
+        let data = new FormData;
+        data.append('message', this.elements[0].value);
+        data.append('chatId', chatId);
+        xhr.onreadystatechange = function (){
+            if (xhr.readyState === 4){
+                let body = chatMessages.innerHTML;
+                let response = JSON.parse(xhr.response);
+                body += `<div class="message right"><p>${window.user.name}</p><p>${me.elements[0].value}</p><p>${response.data}</p></div>`;
+                chatMessages.innerHTML = body;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                me.reset();
+            }
+        }
+        xhr.open('POST', '/Api/addMessage');
+        xhr.send(data);
+    });
 }
 
 
