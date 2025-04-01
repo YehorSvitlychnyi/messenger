@@ -19,7 +19,7 @@ function init(){
         chatSelect();
         getAllChats();
         logout();
-    },10);
+    },200);
 }
 function getAllChats(){
     let xhr = new XMLHttpRequest();
@@ -50,7 +50,6 @@ function getMessages(id, name){
     data.append('id', id)
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4){
-            console.log(xhr.response);
             let chatData = JSON.parse(xhr.response);
             sessionStorage.setItem('chatName', name);
             sessionStorage.setItem('chatId', id);
@@ -148,17 +147,19 @@ function newMessage(chatId){
     });
 }
 function logout(){
+    console.log(window.user);
     let body = `<div class="user-logout"><p>${window.user.name}</p></div><form><input type="submit" value="log Out"></form>`;
     chatUser.innerHTML = body;
     let logout = document.querySelector('.chat-user form');
     logout.addEventListener('submit' ,function(e){
         e.preventDefault();
         window.user = null;
+        sessionStorage.clear();
         let xhr = new XMLHttpRequest();
         xhr.open('GET', '/Api/logout');
         xhr.send();
         setTimeout(function(){
-            window.location.replace("/auth/signin");
+            window.location.replace("/Auth/signin");
         }, 20);
 
     });
