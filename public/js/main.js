@@ -8,9 +8,9 @@ window.user = null;
 setInterval(function () {
     chatSelect();
     getAllChats();
-    console.log(sessionStorage.getItem('chatName'));
     if(sessionStorage.getItem('chatName') !== null) {
-        getMessages(sessionStorage.getItem('chatId'),sessionStorage.getItem('chatName'));
+        let text = document.querySelector('.chat-new-message form textarea').value;
+        getMessages(sessionStorage.getItem('chatId'),sessionStorage.getItem('chatName'), text);
     }
 }, 10000)
 init();
@@ -19,9 +19,9 @@ function init(){
     setTimeout(function(){
         chatSelect();
         getAllChats();
-    },10);
+        logout();
+    },200);
 }
-
 function getAllChats(){
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function (){
@@ -45,18 +45,17 @@ function getAllChats(){
     xhr.send();
 }
 
-function getMessages(id, name){
+function getMessages(id, name, message=''){
     let xhr = new XMLHttpRequest();
     let data = new FormData;
     data.append('id', id)
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4){
-            console.log(xhr.response);
             let chatData = JSON.parse(xhr.response);
             sessionStorage.setItem('chatName', name);
             sessionStorage.setItem('chatId', id);
             showChat(chatData, name);
-            newMessage(id);
+            newMessage(id, message);
         }
     }
     xhr.open('POST', '/Api/getMessages');
@@ -123,8 +122,9 @@ function getUser(){
     xhr.open('GET', '/Api/getUser');
     xhr.send();
 }
-function newMessage(chatId){
-    let body = '<form><textarea cols="40" rows="2" style="min-height: 40px;max-height: 40px"></textarea><input type="submit" value="send"></form>';
+function newMessage(chatId, message=''){
+
+    let body = `<form><textarea autofocus cols="40" rows="2" style="min-height: 40px;max-height: 40px">${message}</textarea><input type="submit" value="send"></form>`;
     chatNewMessage.innerHTML = body;
     let form = document.querySelector('.chat-new-message form');
     form.addEventListener('submit' ,function(e){
@@ -146,6 +146,24 @@ function newMessage(chatId){
         }
         xhr.open('POST', '/Api/addMessage');
         xhr.send(data);
+    });
+}
+function logout(){
+    console.log(window.user);
+    let body = `<div class="user-logout"><p>${window.user.name}</p></div><form><input type="submit" value="log Out"></form>`;
+    chatUser.innerHTML = body;
+    let logout = document.querySelector('.chat-user form');
+    logout.addEventListener('submit' ,function(e){
+        e.preventDefault();
+        window.user = null;
+        sessionStorage.clear();
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/Api/logout');
+        xhr.send();
+        setTimeout(function(){
+            window.location.replace("/Auth/signin");
+        }, 20);
+
     });
 }
 
