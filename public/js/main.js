@@ -118,7 +118,7 @@ function getUser(){
         if (xhr.readyState === 4){
             window.user = JSON.parse(xhr.response);
         }
-    }
+    };
     xhr.open('GET', '/Api/getUser');
     xhr.send();
 }
@@ -142,6 +142,7 @@ function newMessage(chatId, message=''){
                 chatMessages.innerHTML = body;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 me.reset();
+                me[0].value = '';
             }
         }
         xhr.open('POST', '/Api/addMessage');
@@ -149,7 +150,6 @@ function newMessage(chatId, message=''){
     });
 }
 function logout(){
-    console.log(window.user);
     let body = `<div class="user-logout"><p>${window.user.name}</p></div><form><input type="submit" value="log Out"></form>`;
     chatUser.innerHTML = body;
     let logout = document.querySelector('.chat-user form');
