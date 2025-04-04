@@ -116,10 +116,6 @@ class AuthController
      */
     public function register(): void
     {
-        if ($this->model->getByLogin($this->request->login)) {
-            Session::setErrors(['login' => ['Цей логін вже зайнятий']]);
-            $this->response->redirect(Route::url('auth', 'signup'));
-        }
         $this->validate('register', 'signup');
         $name            = $this->request->name;
         $login           = $this->request->login;

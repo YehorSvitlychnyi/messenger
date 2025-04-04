@@ -10,7 +10,7 @@ class Validation
             'password' => 'required|min:6|max:30|uncorrected',
         ],
         'register' => [
-            'name'            => 'required|min:2|max:50',
+            'name'            => 'required|min:2|max:50|unique',
             'login'           => 'required|min:5|max:20|different:password',
             'password'        => 'required|min:6|max:30|different:secret_answer',
             'password_repeat' => 'required|same:password',
@@ -209,6 +209,19 @@ class Validation
         }
     }
 
+    /**
+     * @param string $field
+     *
+     * @return void
+     */
+    private function uniqueRule(string $field): void
+    {
+        $userModel = new \app\models\UserModel();
+        $user      = $userModel->getByLogin($_POST['login']);
+        if ($userModel->getByLogin($user['login'])) {
+            $this->errors[$field][] = "Цей логін вже зайнятий";
+        }
+    }
 
     /**
      * @param string      $field
