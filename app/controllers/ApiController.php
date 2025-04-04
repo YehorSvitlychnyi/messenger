@@ -24,12 +24,12 @@ class ApiController
 
     public function __construct()
     {
-        $this->response     = new Response();
-        $this->model        = new ChatModel();
-        $this->request      = new Request();
-        $this->userModel    = new UserModel();
+        $this->response = new Response();
+        $this->model = new ChatModel();
+        $this->request = new Request();
+        $this->userModel = new UserModel();
         $this->messageModel = new MessagesModel();
-        $this->user         = $this->userModel->getUser();
+        $this->user = $this->userModel->getUser();
     }
 
     /**
@@ -38,7 +38,7 @@ class ApiController
     public function getChats(): void
     {
         $userId = $this->user['id'];
-        $chats  = $this->model->getChats($userId);
+        $chats = $this->model->getChats($userId);
         $this->response->json($chats);
     }
 
@@ -47,7 +47,7 @@ class ApiController
      */
     public function getMessages(): void
     {
-        $chatId   = $this->request->id;
+        $chatId = $this->request->id;
         $messages = $this->model->getMessages($chatId);
         $this->response->json($messages);
     }
@@ -57,9 +57,9 @@ class ApiController
      */
     public function getUsers(): void
     {
-        $data   = $this->userModel->all();
+        $data = $this->userModel->all();
         $userId = $this->user['id'];
-        $chats  = $this->model->getChats($userId);
+        $chats = $this->model->getChats($userId);
         foreach ($data as $key => $user) {
             if ($user['id'] == $userId) {
                 unset($data[$key]);
@@ -70,7 +70,7 @@ class ApiController
                 }
             }
         }
-        $data                = array_values($data);
+        $data = array_values($data);
         $this->acceptedUsers = $data;
         $this->response->json($data);
     }
@@ -80,9 +80,8 @@ class ApiController
      */
     public function addChat(): void
     {
-        $userIdFirst  = $this->request->userIdFirst;
+        $userIdFirst = $this->request->userIdFirst;
         $userIdSecond = $this->request->userIdSecond;
-        //todo validate accepted users
         $this->model->addChat($userIdFirst, $userIdSecond);
     }
 
@@ -91,10 +90,10 @@ class ApiController
      */
     public function getUser(): void
     {
-        $userData      = $this->userModel->getUser();
-        $user['name']  = $userData['name'];
+        $userData = $this->userModel->getUser();
+        $user['name'] = $userData['name'];
         $user['login'] = $userData['login'];
-        $user['id']    = $userData['id'];
+        $user['id'] = $userData['id'];
         $this->response->json($user);
     }
 
@@ -103,10 +102,10 @@ class ApiController
      */
     public function addMessage(): void
     {
-        $chatId  = $this->request->chatId;
+        $chatId = $this->request->chatId;
         $message = $this->request->message;
-        $userId  = $this->user['id'];
-        $data    = ['message' => $message, 'chat_id' => $chatId, 'user_id' => $userId];
+        $userId = $this->user['id'];
+        $data = ['message' => $message, 'chat_id' => $chatId, 'user_id' => $userId];
         if ($this->messageModel->add($data)) {
             $this->response->json(['data' => date('Y-m-d H:i:s')]);
         } else {

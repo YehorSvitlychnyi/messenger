@@ -6,11 +6,15 @@ const chatNewMessage = document.querySelector('.chat-new-message');
 const chatUser = document.querySelector('.chat-user');
 window.user = null;
 setInterval(function () {
-    chatSelect();
+    let select = document.querySelector('.new-chat select');
+    chatSelect(select.value);
     getAllChats();
     if(sessionStorage.getItem('chatName') !== null) {
-        let text = document.querySelector('.chat-new-message form textarea').value;
-        getMessages(sessionStorage.getItem('chatId'),sessionStorage.getItem('chatName'), text);
+        let text;
+        if(document.querySelector('.chat-new-message form textarea')) {
+            text = document.querySelector('.chat-new-message form textarea').value;
+            getMessages(sessionStorage.getItem('chatId'),sessionStorage.getItem('chatName'), text);
+        }
     }
 }, 10000)
 init();
@@ -75,7 +79,7 @@ function showChat(chatData, name){
     chatMessages.innerHTML = body;
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-function chatSelect(){
+function chatSelect(value){
     let xhr = new  XMLHttpRequest();
     xhr.onreadystatechange = function (){
         if (xhr.readyState === 4){
@@ -86,6 +90,8 @@ function chatSelect(){
             }
             body += `</select><input type="submit" value="add" class="add-chat-button"/></form>`;
             newChat.innerHTML = body;
+            let select = document.querySelector('.new-chat select');
+            select.value = value;
             let form = document.querySelector('.new-chat form');
             form.addEventListener('submit' ,function(e){
                 e.preventDefault();
@@ -123,9 +129,12 @@ function getUser(){
     xhr.send();
 }
 function newMessage(chatId, message=''){
-
-    let body = `<form><textarea autofocus cols="40" rows="2" style="min-height: 40px;max-height: 40px">${message}</textarea><input type="submit" value="send"></form>`;
+    let body = `<form><textarea cols="40" rows="2" style="min-height: 40px;max-height: 40px"></textarea><input type="submit" value="send"></form>`;
     chatNewMessage.innerHTML = body;
+    let input = document.querySelector('.chat-new-message textarea');
+    input.focus();
+    input.value = message;
+    input.scrollTop = input.scrollHeight;
     let form = document.querySelector('.chat-new-message form');
     form.addEventListener('submit' ,function(e){
         let me = this;
@@ -145,8 +154,11 @@ function newMessage(chatId, message=''){
                 me[0].value = '';
             }
         }
-        xhr.open('POST', '/Api/addMessage');
-        xhr.send(data);
+        let value = this.elements[0].value.trim();
+        if(value !== ''){
+            xhr.open('POST', '/Api/addMessage');
+            xhr.send(data);
+        }
     });
 }
 function logout(){
