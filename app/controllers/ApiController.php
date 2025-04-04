@@ -14,84 +14,111 @@ use app\models\UserModel;
 
 class ApiController
 {
-    public $response;
-    public $model;
-    public $userModel;
-
-    public $messageModel;
-    public $request;
+    public Response $response;
+    public ChatModel $model;
+    public UserModel $userModel;
+    public MessagesModel $messageModel;
+    public Request $request;
+    public array|null|false $user;
     public $acceptedUsers;
-
-    public $user;
 
     public function __construct()
     {
-        $this->response = new Response();
-        $this->model = new ChatModel();
-        $this->request = new Request();
-        $this->userModel = new UserModel();
+        $this->response     = new Response();
+        $this->model        = new ChatModel();
+        $this->request      = new Request();
+        $this->userModel    = new UserModel();
         $this->messageModel = new MessagesModel();
-        $this->user = $this->userModel->getUser();
+        $this->user         = $this->userModel->getUser();
     }
 
-    public function getChats()
+    /**
+     * @return void
+     */
+    public function getChats(): void
     {
         $userId = $this->user['id'];
-        $chats = $this->model->getChats($userId);
+        $chats  = $this->model->getChats($userId);
         $this->response->json($chats);
     }
-    public function getMessages()
+
+    /**
+     * @return void
+     */
+    public function getMessages(): void
     {
-        $chatId = $this->request->id;
+        $chatId   = $this->request->id;
         $messages = $this->model->getMessages($chatId);
         $this->response->json($messages);
     }
-    public function getUsers()
+
+    /**
+     * @return void
+     */
+    public function getUsers(): void
     {
-        $data = $this->userModel->all();
+        $data   = $this->userModel->all();
         $userId = $this->user['id'];
-        $chats = $this->model->getChats($userId);
-        foreach($data as $key => $user){
-            if($user['id'] == $userId){
+        $chats  = $this->model->getChats($userId);
+        foreach ($data as $key => $user) {
+            if ($user['id'] == $userId) {
                 unset($data[$key]);
             }
-            foreach($chats as $chat){
-                if($user['id'] == $chat['user_first_id'] || $user['id'] == $chat['user_second_id']){
+            foreach ($chats as $chat) {
+                if ($user['id'] == $chat['user_first_id'] || $user['id'] == $chat['user_second_id']) {
                     unset($data[$key]);
                 }
             }
         }
-        $data = array_values($data);
+        $data                = array_values($data);
         $this->acceptedUsers = $data;
         $this->response->json($data);
     }
-    public function addChat()
+
+    /**
+     * @return void
+     */
+    public function addChat(): void
     {
-        $userIdFirst = $this->request->userIdFirst;
+        $userIdFirst  = $this->request->userIdFirst;
         $userIdSecond = $this->request->userIdSecond;
         //todo validate accepted users
         $this->model->addChat($userIdFirst, $userIdSecond);
     }
-    public function getUser()
+
+    /**
+     * @return void
+     */
+    public function getUser(): void
     {
-        $userData = $this->userModel->getUser();
-        $user['name'] = $userData['name'];
+        $userData      = $this->userModel->getUser();
+        $user['name']  = $userData['name'];
         $user['login'] = $userData['login'];
-        $user['id'] = $userData['id'];
+        $user['id']    = $userData['id'];
         $this->response->json($user);
     }
-    public function addMessage(){
-        $chatId = $this->request->chatId;
+
+    /**
+     * @return void
+     */
+    public function addMessage(): void
+    {
+        $chatId  = $this->request->chatId;
         $message = $this->request->message;
-        $userId = $this->user['id'];
-        $data = ['message' => $message, 'chat_id' => $chatId, 'user_id' => $userId];
-        if($this->messageModel->add($data)){
-            $this->response->json(['data'=>date('Y-m-d H:i:s')]);
-        }else{
-            $this->response->json(['data'=>'message not created']);
+        $userId  = $this->user['id'];
+        $data    = ['message' => $message, 'chat_id' => $chatId, 'user_id' => $userId];
+        if ($this->messageModel->add($data)) {
+            $this->response->json(['data' => date('Y-m-d H:i:s')]);
+        } else {
+            $this->response->json(['data' => 'message not created']);
         }
     }
-    public function logout(){
+
+    /**
+     * @return void
+     */
+    public function logout(): void
+    {
         Session::deleteItem('login');
     }
 }

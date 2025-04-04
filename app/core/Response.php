@@ -28,6 +28,7 @@ class Response
 
     /**
      * Set HTTP response status
+     *
      * @param int $statusCode
      */
     public function status(int $statusCode): void
@@ -37,6 +38,7 @@ class Response
 
     /**
      * Set location header
+     *
      * @param string $url
      */
     public function redirect(string $url)
@@ -47,20 +49,22 @@ class Response
 
     /**
      * Show view
+     *
      * @param string $page
-     * @param array $data
+     * @param array  $data
      * @param string $template
+     *
      * @throws \Exception
      */
-    public function view(string $page, array $data = [], string $template = self::DEFAULT_TEMPLATE)
+    public function view(string $page, array $data = [], string $template = self::DEFAULT_TEMPLATE): void
     {
         extract($data);
         $templateFile = $this->getTemplatesDir() . '/' . $template . '_template.php';
-        if(!file_exists($templateFile)){
+        if (!file_exists($templateFile)) {
             throw new \Exception('No template file ' . $templateFile);
         }
         $pagePath = $this->getPagesDir() . '/' . $page . '_page.php';
-        if(!file_exists($pagePath)){
+        if (!file_exists($pagePath)) {
             throw new \Exception('No page file ' . $pagePath);
         }
         include_once $templateFile;
@@ -68,20 +72,32 @@ class Response
 
     /**
      * Return templates dir full path
+     *
      * @return string
      */
-    private function getTemplatesDir(){
+    private function getTemplatesDir(): string
+    {
         return self::VIEWS_DIR . self::VIEWS_TEMPLATE_DIR;
     }
+
     /**
      * Return pages dir full path
+     *
      * @return string
      */
-    private function getPagesDir(){
+    private function getPagesDir(): string
+    {
         return self::VIEWS_DIR . self::VIEWS_PAGES_DIR;
     }
-    public function json(array $data){
-        echo json_encode($data);
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function json(array $data): void
+    {
         header('Content-Type: application/json');
+        echo json_encode($data);
     }
 }

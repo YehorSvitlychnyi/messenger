@@ -7,7 +7,7 @@ class Validation
     public const METHOD_REQUIREMENTS = [
         'login'    => [
             'login'    => 'required|min:5|max:20',
-            'password' => 'required|min:6|max:30',
+            'password' => 'required|min:6|max:30|uncorrected',
         ],
         'register' => [
             'name'            => 'required|min:2|max:50',
@@ -17,8 +17,8 @@ class Validation
             'secret_answer'   => 'required|min:2|max:100',
         ],
         'forgot'   => [
-            'login'  => 'required|min:5|max:20',
-            'secret_answer' => 'required|min:2|max:100',
+            'login'         => 'required|min:5|max:20',
+            'secret_answer' => 'required|min:2|max:100|invalidanswer',
         ],
         'reset'    => [
             'password'        => 'required|min:6|max:30',
@@ -91,8 +91,8 @@ class Validation
      */
     private function processField(string $field, string $rules, array $params): void
     {
-        $old = Session::getItem('old') ?? [];
-        $value = $params[$field] ?? ($old[$field] ?? null);
+        $old              = Session::getItem('old') ?? [];
+        $value            = $params[$field] ?? ($old[$field] ?? null);
         $rulesArray       = explode('|', $rules);
         $hasRequiredError = $this->applyRequiredRules($field, $value, $rulesArray, $params);
 
@@ -167,8 +167,8 @@ class Validation
     }
 
     /**
-     * @param string      $field
-     * @param mixed       $value
+     * @param string $field
+     * @param mixed  $value
      *
      * @return void
      */
@@ -178,6 +178,37 @@ class Validation
             $this->errors[$field][] = "$field обовзякове";
         }
     }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    private function uncorrectedRule(string $field, mixed $value): void
+    {
+        $userModel = new \app\models\UserModel();
+        $user      = $userModel->getByLogin($_POST['login']);
+        if (!$user || !password_verify($value, $user['password'])) {
+            $this->errors[$field][] = "Неправильний логін або пароль";
+        }
+    }
+
+    /**
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    private function invalidanswerRule(string $field, mixed $value): void
+    {
+        $userModel = new \app\models\UserModel();
+        $user      = $userModel->getByLogin($_POST['login']);
+        if (!$user || !password_verify($value, $user['secret_answer'])) {
+            $this->errors[$field][] = "Неправильний логін або секретна відповідь";
+        }
+    }
+
 
     /**
      * @param string      $field
@@ -232,7 +263,6 @@ class Validation
      */
     private function differentRule(string $field, mixed $value, ?string $arg, array $params): void
     {
-        //new code
         if (isset($params[$arg]) && $value === $params[$arg]) {
             $this->errors[$field][] = "$field не може співпадати з $arg";
         }

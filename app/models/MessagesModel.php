@@ -10,7 +10,12 @@ class MessagesModel extends AbstractModel
 {
     protected $table = 'messages';
 
-    public function getMessages($chatId)
+    /**
+     * @param $chatId
+     *
+     * @return array
+     */
+    public function getMessages($chatId): array
     {
         $sql = "SELECT messages.message as message, messages.created_at as created_at, users.name, users.login from messages LEFT OUTER JOIN users on messages.user_id = users.id WHERE messages.chat_id = $chatId ORDER by created_at;";
         $res = $this->db->query($sql);

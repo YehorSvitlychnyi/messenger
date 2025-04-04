@@ -6,34 +6,63 @@ namespace app\core;
 
 class Session
 {
-    static function getItem($key){
+    /**
+     * @param $key
+     *
+     * @return mixed|null
+     */
+    static function getItem($key): mixed
+    {
         (new Session)->isSessionStart();
-        if(empty($_SESSION[$key])){
+        if (empty($_SESSION[$key])) {
             return null;
         }
         return $_SESSION[$key];
     }
 
-    static public function setItem($key, $val){
+    /**
+     * @param $key
+     * @param $val
+     *
+     * @return void
+     */
+    static public function setItem($key, $val): void
+    {
         (new Session)->isSessionStart();
         $_SESSION[$key] = $val;
     }
 
-    static public function setErrors(array $errors){
+    /**
+     * @param array $errors
+     *
+     * @return void
+     */
+    static public function setErrors(array $errors): void
+    {
         (new Session)->isSessionStart();
         $_SESSION['errors'] = $errors;
     }
 
-    static public function getErrors(){
+    /**
+     * @return array|mixed
+     */
+    static public function getErrors(): mixed
+    {
         (new Session)->isSessionStart();
-        if(empty($_SESSION['errors'])){
+        if (empty($_SESSION['errors'])) {
             return [];
         }
         $errors = $_SESSION['errors'];
         unset($_SESSION['errors']);
         return $errors;
     }
-    static public function deleteItem($key)
+
+    /**
+     * @param $key
+     *
+     * @return void
+     */
+    static public function deleteItem($key): void
     {
         (new Session)->isSessionStart();
         unset($_SESSION[$key]);
@@ -49,15 +78,3 @@ class Session
         }
     }
 }
-
-//static private function isSessionStart(): void
-//{
-//    if (session_status() !== PHP_SESSION_ACTIVE) {
-//        session_start();
-//    }
-//}
-//
-//static public function setItem($key, $val){
-//    self::isSessionStart();
-//    $_SESSION[$key] = $val;
-//}
