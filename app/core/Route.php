@@ -58,7 +58,6 @@ class Route
 
     /**
      * Send status 404
-     *
      * @return never
      */
     static public function notFound(): never

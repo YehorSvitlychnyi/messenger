@@ -6,7 +6,9 @@ namespace app\core;
 class Request
 {
     protected array $request = [];
-
+    /**
+     * getting from global array all requests and filtering it
+     */
     public function __construct()
     {
         $this->request = $_REQUEST;
@@ -16,6 +18,7 @@ class Request
     }
 
     /**
+     * getting value from array request by ket($name)
      * @param $name
      *
      * @return mixed|null

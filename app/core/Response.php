@@ -92,7 +92,7 @@ class Response
 
     /**
      * @param array $data
-     *
+     * sending json string to client by http response
      * @return void
      */
     public function json(array $data): void

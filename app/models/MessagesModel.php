@@ -12,7 +12,7 @@ class MessagesModel extends AbstractModel
 
     /**
      * @param $chatId
-     *
+     * get array of messages from database by chat id
      * @return array
      */
     public function getMessages($chatId): array

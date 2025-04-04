@@ -13,7 +13,7 @@ class UserModel extends AbstractModel
 
     /**
      * @param string $login
-     *
+     * get user data by login from database
      * @return array|false|null
      */
     public function getByLogin(string $login): bool|array|null
@@ -29,7 +29,7 @@ class UserModel extends AbstractModel
     /**
      * @param string $login
      * @param string $password
-     *
+     * updating user password in database
      * @return bool|\mysqli_result
      */
     public function changePassword(string $login, string $password): \mysqli_result|bool
@@ -41,6 +41,7 @@ class UserModel extends AbstractModel
 
     /**
      * @return array|bool|null
+     * get user data by login from session
      */
     public function getUser(): bool|array|null
     {

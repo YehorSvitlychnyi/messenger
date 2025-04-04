@@ -44,6 +44,7 @@ class AuthController
     }
 
     /**
+     * login user by Session after validating and checking inputted data
      * @return void
      */
     public function login(): void
@@ -65,6 +66,7 @@ class AuthController
     }
 
     /**
+     *
      * @return void
      */
     public function forgotPassword(): void

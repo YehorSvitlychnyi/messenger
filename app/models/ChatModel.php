@@ -1,9 +1,10 @@
 <?php
 
+
 namespace app\models;
 
+
 use app\core\AbstractModel;
-use app\core\Session;
 
 class ChatModel extends AbstractModel
 {
@@ -18,7 +19,7 @@ class ChatModel extends AbstractModel
 
     /**
      * @param string $userId
-     *
+     * get all chats where the user participated from database by user id
      * @return array
      */
     public function getChats(string $userId): array
@@ -30,7 +31,7 @@ class ChatModel extends AbstractModel
 
     /**
      * @param string $chatId
-     *
+     * get array of messages from database by chat id
      * @return array
      */
     public function getMessages(string $chatId): array
@@ -41,7 +42,7 @@ class ChatModel extends AbstractModel
     /**
      * @param $userIdFirst
      * @param $userIdSecond
-     *
+     * adding new chat to database using users id
      * @return void
      */
     public function addChat($userIdFirst, $userIdSecond): void

@@ -6,7 +6,6 @@ namespace app\controllers;
 
 use app\core\Request;
 use app\core\Response;
-use app\core\Route;
 use app\core\Session;
 use app\models\ChatModel;
 use app\models\MessagesModel;
@@ -33,6 +32,7 @@ class ApiController
     }
 
     /**
+     * Gets chats by userId(from session)
      * @return void
      */
     public function getChats(): void
@@ -43,6 +43,7 @@ class ApiController
     }
 
     /**
+     * Get messages by chatID(from request)
      * @return void
      */
     public function getMessages(): void
@@ -53,6 +54,7 @@ class ApiController
     }
 
     /**
+     * Get users from select except already used user for chatting
      * @return void
      */
     public function getUsers(): void
@@ -76,6 +78,7 @@ class ApiController
     }
 
     /**
+     * create new chat and add to DB by userID's getting from request
      * @return void
      */
     public function addChat(): void
@@ -86,6 +89,7 @@ class ApiController
     }
 
     /**
+     * Pushing current user on client
      * @return void
      */
     public function getUser(): void
@@ -98,6 +102,7 @@ class ApiController
     }
 
     /**
+     * Add message to DB from request
      * @return void
      */
     public function addMessage(): void
@@ -114,6 +119,7 @@ class ApiController
     }
 
     /**
+     * Unset user from Session
      * @return void
      */
     public function logout(): void

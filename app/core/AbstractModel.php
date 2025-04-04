@@ -15,6 +15,7 @@ abstract class AbstractModel
     }
 
     /**
+     * get all records from notes
      * @return array
      */
     public function all(): array
@@ -28,6 +29,7 @@ abstract class AbstractModel
     }
 
     /**
+     * add new record to table
      * @param array $data
      *
      * @return bool|\mysqli_result
