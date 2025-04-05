@@ -1,95 +1,3 @@
-/*
-.login-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.login-form-container {
-    background-color: #A7D1D2;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 300px;
-}
-
-.h1{
-    color: #033540;
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.login-form label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #015366;
-}
-
-.login-form input[type="text"],
-.login-form input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #63898C;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.login-form input[type="submit"] {
-    background-color: #015366;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-    font-size: 16px;
-}
-
-.login-form input[type="submit"]:hover {
-    background-color: #033540;
-}
-
-.login-register-button,
-.login-forgot-button {
-    margin: 10px;
-}
-
-.login-register-button a,
-.login-forgot-button a {
-    color: #033540;
-    text-decoration: none;
-    font-size: 14px;
-}
-.login-buttons{
-    display: flex;
-    flex-direction: row;
-}
-
-.login-register-button a:hover,
-.login-forgot-button a:hover {
-    text-decoration: underline;
-}
-.register-body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-.input{
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}*/
-
-
 .auth-container {
     padding-top: 60px;
     padding-bottom: 60px;
@@ -100,87 +8,24 @@
     border-radius: 12px;
 }
 
-
-/*.chat-body{*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: space-around;*/
-/*    height: 100vh;*/
-/*    width: 100%;*/
-/*    padding: 50px;*/
-/*    >div{*/
-/*        padding: 20px;*/
-/*        width: 30%;*/
-/*        height: 500px;*/
-/*        background-color: #63898C;*/
-/*        border-radius: 15px;*/
-/*    }*/
-/*}*/
-/*.chat-list{*/
-/*    .chat-catalog{*/
-/*        div{*/
-/*            background-color: #9c3267;*/
-/*            padding: 10px;*/
-/*            border-radius: 10px;*/
-/*            margin: 10px;*/
-/*        }*/
-/*    }*/
-/*}*/
-/*.chat-messages{*/
-/*    min-height: 200px;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    overflow-y: auto;*/
-/*    max-height: 400px;*/
-/*    width: 400px;*/
-/*    .right{*/
-/*        align-self: flex-end;*/
-/*    }*/
-/*    .left{*/
-/*        align-self: flex-start;*/
-/*    }*/
-/*}*/
-
-/*.message{*/
-/*    word-wrap: break-word;*/
-/*    text-align: left;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    margin: 10px;*/
-/*    background-color: #E0F4F5;*/
-/*    color: #eb000a;*/
-/*    padding: 5px;*/
-/*    border-radius: 5px;*/
-/*    max-width: 100px;*/
-/*    p{*/
-/*        margin: 0;*/
-/*        padding: 0;*/
-/*    }*/
-/*}*/
-/*.chat-new-message{*/
-/*    width: 400px;*/
-/*}*/
-/* Основные стили для контейнеров */
-/* Контейнер для чата */
 .chat-body {
     margin: 50px auto;
     display: flex;
-    width: 90%; /* Ширина чата, занимает 90% от доступного пространства */
-    height: 600px; /* Высота чата относительно окна */
-    background-color: #343a40; /* Темный фон чата */
-    color: #ffffff; /* Светлый текст */
-    border-radius: 8px; /* Закругленные края */
+    width: 90%;
+    height: 600px;
+    background-color: #343a40;
+    color: #ffffff;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Тень */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Стили для списка чатов (левая панель) */
 .chat-list {
     width: 25%;
-    background-color: #495057; /* Темнее серый для списка чатов */
+    background-color: #495057;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #6c757d; /* Линия разделения */
+    border-right: 1px solid #6c757d;
 }
 
 .new-chat {
@@ -226,7 +71,7 @@
 .chat {
     padding: 10px;
     margin-bottom: 5px;
-    background-color: #6c757d; /* Нейтральный фон для чатов */
+    background-color: #6c757d;
     border-radius: 5px;
     cursor: pointer;
     text-align: left;
@@ -242,7 +87,6 @@
     color: white;
 }
 
-/* Стили для главной панели чата (центральная часть) */
 .chat-main {
     flex: 1;
     display: flex;
@@ -279,18 +123,28 @@
     border-radius: 8px;
     max-width: 70%;
     word-wrap: break-word;
+    p:last-child, p:first-child {
+        font-size: 0.8rem;
+        font-style: italic;
+    }
 }
 
 .message.right {
-    background-color: #0d6efd; /* Сообщение пользователя */
+    background-color: #0d6efd;
     color: white;
-    align-self: flex-end; /* Правое выравнивание */
+    align-self: flex-end;
+    p:first-child {
+        color: #e1a470;
+    }
 }
 
 .message.left {
-    background-color: #6c757d; /* Сообщение собеседника */
+    background-color: #6c757d;
     color: white;
-    align-self: flex-start; /* Левое выравнивание */
+    align-self: flex-start;
+    p:first-child {
+        color: rgba(136,255,131,0.68);
+    }
 }
 
 .message p {
@@ -320,7 +174,7 @@
 .chat-new-message input[type="submit"] {
     margin-left: 10px;
     padding: 10px 20px;
-    background-color: #198754; /* Зеленая кнопка */
+    background-color: #198754;
     color: white;
     border: none;
     border-radius: 5px;
@@ -331,7 +185,7 @@
     background-color: #157347;
 }
 
-/* Стили для панели пользователя (правая часть) */
+
 .chat-user {
     width: 20%;
     background-color: #495057;
@@ -356,7 +210,7 @@
     font-size: 14px;
     cursor: pointer;
     border: none;
-    background-color: #dc3545; /* Красная кнопка */
+    background-color: #dc3545;
     color: white;
     border-radius: 5px;
 }

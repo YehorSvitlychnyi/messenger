@@ -8,9 +8,9 @@
         <title><?= $title ?></title>
         <link rel="stylesheet" href="/css/style.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
     </head>
         <body>
-<!--        <body class="text-light vh-100 d-flex align-items-center justify-content-center">-->
                 <div>
                     <?php include_once $pagePath ?>
                 </div>

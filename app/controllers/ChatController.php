@@ -10,10 +10,15 @@ use app\core\Session;
 
 class ChatController
 {
-    public function init(){
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function init(): void
+    {
         $response = new Response();
         $response->view('chat', [
-            'title' => 'chat',
+            'title'  => 'chat',
             'errors' => Session::getErrors(),
         ]);
     }

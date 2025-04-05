@@ -2,15 +2,16 @@
 
 /**
  * Parse config file and creates specify constants
+ *
  * @throws Exception
  */
-function loadConfig()
+function loadConfig(): void
 {
     $configFile = '../config';
     if (!file_exists($configFile)) {
         throw new Exception('no config file');
     }
-    $configStr = file_get_contents($configFile);
+    $configStr   = file_get_contents($configFile);
     $configPairs = explode(PHP_EOL, $configStr);
     foreach ($configPairs as $configPair) {
         if (empty($configPair)) {
